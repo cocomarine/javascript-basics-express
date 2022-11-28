@@ -12,6 +12,16 @@ describe('/strings', () => {
           done();
         });
     });
+
+    xit('returns "Hello, tutle!" when passed "turtle"', done => {
+      request(app)
+        .get('/strings/hellow/turtle')
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toEqual({ result: 'Hello, turtle!' });
+          done();
+        });
+    });
   });
 
   describe('GET /upper/{string}', () => {

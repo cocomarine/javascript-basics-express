@@ -6,6 +6,7 @@ const {
   lowercase,
   firstCharacter,
   firstCharacters,
+  countCharacters,
 } = require('./lib/strings');
 
 const app = express();
@@ -28,6 +29,10 @@ app.get('/strings/first-characters/:string', (req, res) => {
   } else {
     res.status(200).json({ result: firstCharacter(req.params.string) });
   }
+});
+
+app.get('/strings/count/:string', (req, res) => {
+  res.status(200).json({ result: countCharacters(req.params.string) });
 });
 
 module.exports = app;

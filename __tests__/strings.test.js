@@ -70,4 +70,16 @@ describe('/strings', () => {
         });
     });
   });
+
+  describe('GET /count/{string}', () => {
+    it('returns the character counts', done => {
+      request(app)
+        .get('/strings/count/hello')
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toEqual({ result: 5 });
+          done();
+        });
+    });
+  });
 });

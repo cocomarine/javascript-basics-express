@@ -13,9 +13,9 @@ describe('/strings', () => {
         });
     });
 
-    xit('returns "Hello, tutle!" when passed "turtle"', done => {
+    it('returns "Hello, tutle!" when passed "turtle"', done => {
       request(app)
-        .get('/strings/hellow/turtle')
+        .get('/strings/hello/turtle')
         .then(res => {
           expect(res.status).toEqual(200);
           expect(res.body).toEqual({ result: 'Hello, turtle!' });

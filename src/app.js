@@ -29,6 +29,8 @@ const {
   removeNthElement2,
 } = require('./lib/arrays');
 
+const { negate } = require('./lib/booleans');
+
 const app = express();
 
 app.use(express.json());
@@ -192,8 +194,12 @@ app.post('/arrays/starts-with-vowel', (req, res) => {
   res.status(200).json({ result: elementsStartingWithAVowel(req.body.array) });
 });
 
-app.post('/arrays/remove-element', (req, res) => {
-  res.status(200).json({ result: removeNthElement2(req.query.index, req.body.array) });
+// app.post('/arrays/remove-element', (req, res) => {
+//   res.status(200).json({ result: removeNthElement2(req.query.index, req.body.array) });
+// });
+
+app.post('/booleans/negate', (req, res) => {
+  res.status(200).json({ result: negate(req.body.value) });
 });
 
 module.exports = app;

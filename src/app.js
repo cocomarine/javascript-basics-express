@@ -9,9 +9,11 @@ const {
   countCharacters,
 } = require('./lib/strings');
 
-const { add, subtract } = require('./lib/numbers');
+const { add, subtract, multiply } = require('./lib/numbers');
 
 const app = express();
+
+app.use(express.json());
 
 app.get('/strings/hello/:string', (req, res) => {
   res.status(200).json({ result: sayHello(req.params.string) });
@@ -56,6 +58,19 @@ app.get('/numbers/subtract/:number2/from/:number1', (req, res) => {
     res.status(400).json({ error: 'Parameters must be valid numbers.' });
   } else {
     res.status(200).json({ result: subtract(num1, num2) });
+  }
+});
+
+app.post('/numbers/multiply', (req, res) => {
+  const num1 = req.body.a;
+  const num2 = req.body.b;
+
+  if (!num1 || !num2) {
+    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
+  } else if (Number.isNaN(parseInt(num1)) || Number.isNaN(parseInt(num2))) {
+    res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
+  } else {
+    res.status(200).json({ result: multiply(num1, num2) });
   }
 });
 

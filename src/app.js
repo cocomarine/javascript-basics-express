@@ -18,7 +18,10 @@ const {
   power,
   round,
   absolute,
+  quotient,
 } = require('./lib/numbers');
+
+const { getNthElement } = require('./lib/arrays');
 
 const app = express();
 
@@ -148,6 +151,27 @@ app.post('/numbers/absolute', (req, res) => {
   } else {
     res.status(200).json({ result: absolute(num) });
   }
+});
+
+app.post('/numbers/quotient', (req, res) => {
+  const num1 = req.body.a;
+  const num2 = req.body.b;
+
+  if (num2 == 0) {
+    res.status(400).json({ error: 'Unable to divide by 0.' });
+  } else if ((!num1 || !num2) && num1 != 0) {
+    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
+  } else if (Number.isNaN(parseInt(num1)) || Number.isNaN(parseInt(num2))) {
+    res.status(400).json({ error: 'Parameters must be valid numbers.' });
+  } else {
+    res.status(200).json({ result: quotient(num1, num2) });
+  }
+});
+
+app.post('/arrays/element-at-index/:number', (req, res) => {
+  const num = parseInt(req.params.number, 10);
+
+  res.status(200).json({ result: getNthElement(num, req.body.array) });
 });
 
 module.exports = app;

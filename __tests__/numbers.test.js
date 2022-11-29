@@ -417,4 +417,61 @@ describe('/numbers', () => {
         });
     });
   });
+
+  describe('POST /quotient', () => {
+    it('gives the quotient of dividing 18 by 5', done => {
+      request(app)
+        .post('/numbers/remainder')
+        .send({ a: 18, b: 5 })
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toEqual({ result: 3 });
+          done();
+        });
+    });
+
+    it('gives the quotient of dividing stringified number', done => {
+      request(app)
+        .post('/numbers/quotient')
+        .send({ a: '18', b: '5' })
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toEqual({ result: 3 });
+          done();
+        });
+    });
+
+    it('errors if dividing by 0', done => {
+      request(app)
+        .post('/numbers/quotient')
+        .send({ a: 10, b: 0 })
+        .then(res => {
+          expect(res.status).toEqual(400);
+          expect(res.body).toEqual({ error: 'Unable to divide by 0.' });
+          done();
+        });
+    });
+
+    it('errors if a parameter is missing', done => {
+      request(app)
+        .post('/numbers/quotient')
+        .send({ a: 'fish' })
+        .then(res => {
+          expect(res.status).toEqual(400);
+          expect(res.body).toEqual({ error: 'Parameters "a" and "b" are required.' });
+          done();
+        });
+    });
+
+    it('errors if the parameters are not numbers', done => {
+      request(app)
+        .post('/numbers/quotient')
+        .send({ a: 'fish', b: 'chips' })
+        .then(res => {
+          expect(res.status).toEqual(400);
+          expect(res.body).toEqual({ error: 'Parameters must be valid numbers.' });
+          done();
+        });
+    });
+  });
 });

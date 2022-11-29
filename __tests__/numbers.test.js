@@ -325,4 +325,50 @@ describe('/numbers', () => {
         });
     });
   });
+
+  describe('POST /round', () => {
+    it('gives rounded number', done => {
+      request(app)
+        .post('/numbers/round')
+        .send({ a: 14.4 })
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toEqual({ result: 14 });
+          done();
+        });
+    });
+
+    it('gives rounded number of stringified number', done => {
+      request(app)
+        .post('/numbers/round')
+        .send({ a: '25.6' })
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toEqual({ result: 26 });
+          done();
+        });
+    });
+
+    it('errors if a parameter is missing', done => {
+      request(app)
+        .post('/numbers/round')
+        .send({})
+        .then(res => {
+          expect(res.status).toEqual(400);
+          expect(res.body).toEqual({ error: 'Parameter required.' });
+          done();
+        });
+    });
+
+    it('errors if a parameter is not a number', done => {
+      request(app)
+        .post('/numbers/round')
+        .send({ a: 'fish' })
+        .then(res => {
+          expect(res.status).toEqual(400);
+          expect(res.body).toEqual({ error: 'Parameter must be a valid number.' });
+          done();
+        });
+    });
+  });
 });

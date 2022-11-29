@@ -9,7 +9,7 @@ const {
   countCharacters,
 } = require('./lib/strings');
 
-const { add, subtract, multiply, divide, remainder, power } = require('./lib/numbers');
+const { add, subtract, multiply, divide, remainder, power, round } = require('./lib/numbers');
 
 const app = express();
 
@@ -114,6 +114,18 @@ app.post('/numbers/power', (req, res) => {
     res.status(400).json({ error: 'Parameters must be valid numbers.' });
   } else {
     res.status(200).json({ result: power(num1, num2) });
+  }
+});
+
+app.post('/numbers/round', (req, res) => {
+  const num = req.body.a;
+
+  if (num == undefined) {
+    res.status(400).json({ error: 'Parameter required.' });
+  } else if (Number.isNaN(parseInt(num))) {
+    res.status(400).json({ error: 'Parameter must be a valid number.' });
+  } else {
+    res.status(200).json({ result: round(num) });
   }
 });
 

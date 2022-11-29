@@ -9,7 +9,7 @@ const {
   countCharacters,
 } = require('./lib/strings');
 
-const { add } = require('./lib/numbers');
+const { add, subtract } = require('./lib/numbers');
 
 const app = express();
 
@@ -45,6 +45,17 @@ app.get('/numbers/add/:number1/and/:number2', (req, res) => {
     res.status(400).json({ error: 'Parameters must be valid numbers.' });
   } else {
     res.status(200).json({ result: add(num1, num2) });
+  }
+});
+
+app.get('/numbers/subtract/:number2/from/:number1', (req, res) => {
+  const num1 = parseInt(req.params.number1, 10);
+  const num2 = parseInt(req.params.number2, 10);
+
+  if (isNaN(num1) || isNaN(num2)) {
+    res.status(400).json({ error: 'Parameters must be valid numbers.' });
+  } else {
+    res.status(200).json({ result: subtract(num1, num2) });
   }
 });
 

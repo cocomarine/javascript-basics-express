@@ -29,7 +29,7 @@ const {
   removeNthElement2,
 } = require('./lib/arrays');
 
-const { negate, truthiness, isOdd } = require('./lib/booleans');
+const { negate, truthiness, isOdd, startsWith } = require('./lib/booleans');
 
 const app = express();
 
@@ -213,6 +213,16 @@ app.get('/booleans/is-odd/:number', (req, res) => {
     res.status(400).json({ error: 'Parameter must be a number.' });
   } else {
     res.status(200).json({ result: isOdd(num) });
+  }
+});
+
+app.get('/booleans/:string/starts-with/:charater', (req, res) => {
+  const char = req.params.charater;
+
+  if (char.length === 1) {
+    res.status(200).json({ result: startsWith(char, req.params.string) });
+  } else {
+    res.status(400).json({ error: 'Parameter "character" must be a single character.' });
   }
 });
 

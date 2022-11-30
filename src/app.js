@@ -29,7 +29,7 @@ const {
   removeNthElement2,
 } = require('./lib/arrays');
 
-const { negate } = require('./lib/booleans');
+const { negate, truthiness, isOdd } = require('./lib/booleans');
 
 const app = express();
 
@@ -200,6 +200,20 @@ app.post('/arrays/starts-with-vowel', (req, res) => {
 
 app.post('/booleans/negate', (req, res) => {
   res.status(200).json({ result: negate(req.body.value) });
+});
+
+app.post('/booleans/truthiness', (req, res) => {
+  res.status(200).json({ result: truthiness(req.body.value) });
+});
+
+app.get('/booleans/is-odd/:number', (req, res) => {
+  const num = parseInt(req.params.number, 10);
+
+  if (Number.isNaN(num)) {
+    res.status(400).json({ error: 'Parameter must be a number.' });
+  } else {
+    res.status(200).json({ result: isOdd(num) });
+  }
 });
 
 module.exports = app;

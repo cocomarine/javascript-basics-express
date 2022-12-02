@@ -5,17 +5,6 @@ const app = express();
 app.use(express.json());
 
 const {
-  subtract,
-  multiply,
-  divide,
-  remainder,
-  power,
-  round,
-  absolute,
-  quotient,
-} = require('./lib/numbers');
-
-const {
   getNthElement,
   arrayToCSVString,
   addToArray2,
@@ -32,101 +21,6 @@ const numbersRoute = require('./routes/numbers');
 app.use('/strings', stringsRoute);
 
 app.use('/numbers', numbersRoute);
-
-app.post('/numbers/multiply', (req, res) => {
-  const num1 = req.body.a;
-  const num2 = req.body.b;
-
-  if (num1 == undefined || num2 == undefined) {
-    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
-  } else if (Number.isNaN(parseInt(num1)) || Number.isNaN(parseInt(num2))) {
-    res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
-  } else {
-    res.status(200).json({ result: multiply(num1, num2) });
-  }
-});
-
-app.post('/numbers/divide', (req, res) => {
-  const num1 = req.body.a;
-  const num2 = req.body.b;
-
-  if (num2 == 0) {
-    res.status(400).json({ error: 'Unable to divide by 0.' });
-  } else if ((!num1 || !num2) && num1 != 0) {
-    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
-  } else if (Number.isNaN(parseInt(num1)) || Number.isNaN(parseInt(num2))) {
-    res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
-  } else {
-    res.status(200).json({ result: divide(num1, num2) });
-  }
-});
-
-app.post('/numbers/remainder', (req, res) => {
-  const num1 = req.body.a;
-  const num2 = req.body.b;
-
-  if (num2 == 0) {
-    res.status(400).json({ error: 'Unable to divide by 0.' });
-  } else if ((!num1 || !num2) && num1 != 0) {
-    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
-  } else if (Number.isNaN(parseInt(num1)) || Number.isNaN(parseInt(num2))) {
-    res.status(400).json({ error: 'Parameters must be valid numbers.' });
-  } else {
-    res.status(200).json({ result: remainder(num1, num2) });
-  }
-});
-
-app.post('/numbers/power', (req, res) => {
-  const num1 = req.body.a;
-  const num2 = req.body.b;
-
-  if (num1 == undefined || num2 == undefined) {
-    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
-  } else if (Number.isNaN(parseInt(num1)) || Number.isNaN(parseInt(num2))) {
-    res.status(400).json({ error: 'Parameters must be valid numbers.' });
-  } else {
-    res.status(200).json({ result: power(num1, num2) });
-  }
-});
-
-app.post('/numbers/round', (req, res) => {
-  const num = req.body.a;
-
-  if (num == undefined) {
-    res.status(400).json({ error: 'Parameter required.' });
-  } else if (Number.isNaN(parseInt(num))) {
-    res.status(400).json({ error: 'Parameter must be a valid number.' });
-  } else {
-    res.status(200).json({ result: round(num) });
-  }
-});
-
-app.post('/numbers/absolute', (req, res) => {
-  const num = req.body.a;
-
-  if (num == undefined) {
-    res.status(400).json({ error: 'Parameter required.' });
-  } else if (Number.isNaN(parseInt(num))) {
-    res.status(400).json({ error: 'Parameter must be a valid number.' });
-  } else {
-    res.status(200).json({ result: absolute(num) });
-  }
-});
-
-app.post('/numbers/quotient', (req, res) => {
-  const num1 = req.body.a;
-  const num2 = req.body.b;
-
-  if (num2 == 0) {
-    res.status(400).json({ error: 'Unable to divide by 0.' });
-  } else if ((!num1 || !num2) && num1 != 0) {
-    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
-  } else if (Number.isNaN(parseInt(num1)) || Number.isNaN(parseInt(num2))) {
-    res.status(400).json({ error: 'Parameters must be valid numbers.' });
-  } else {
-    res.status(200).json({ result: quotient(num1, num2) });
-  }
-});
 
 app.post('/arrays/element-at-index/:number', (req, res) => {
   const num = parseInt(req.params.number, 10);

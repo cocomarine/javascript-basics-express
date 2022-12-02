@@ -1,16 +1,10 @@
 const express = require('express');
 
-const {
-  sayHello,
-  uppercase,
-  lowercase,
-  firstCharacter,
-  firstCharacters,
-  countCharacters,
-} = require('./lib/strings');
+const app = express();
+
+app.use(express.json());
 
 const {
-  add,
   subtract,
   multiply,
   divide,
@@ -31,55 +25,13 @@ const {
 
 const { negate, truthiness, isOdd, startsWith } = require('./lib/booleans');
 
-const app = express();
+const stringsRoute = require('./routes/strings');
 
-app.use(express.json());
+const numbersRoute = require('./routes/numbers');
 
-app.get('/strings/hello/:string', (req, res) => {
-  res.status(200).json({ result: sayHello(req.params.string) });
-});
+app.use('/strings', stringsRoute);
 
-app.get('/strings/upper/:string', (req, res) => {
-  res.status(200).json({ result: uppercase(req.params.string) });
-});
-
-app.get('/strings/lower/:string', (req, res) => {
-  res.status(200).json({ result: lowercase(req.params.string) });
-});
-
-app.get('/strings/first-characters/:string', (req, res) => {
-  if (req.query.length) {
-    res.status(200).json({ result: firstCharacters(req.params.string, req.query.length) });
-  } else {
-    res.status(200).json({ result: firstCharacter(req.params.string) });
-  }
-});
-
-app.get('/strings/count/:string', (req, res) => {
-  res.status(200).json({ result: countCharacters(req.params.string) });
-});
-
-app.get('/numbers/add/:number1/and/:number2', (req, res) => {
-  const num1 = parseInt(req.params.number1, 10);
-  const num2 = parseInt(req.params.number2, 10);
-
-  if (Number.isNaN(num1) || Number.isNaN(num2)) {
-    res.status(400).json({ error: 'Parameters must be valid numbers.' });
-  } else {
-    res.status(200).json({ result: add(num1, num2) });
-  }
-});
-
-app.get('/numbers/subtract/:number2/from/:number1', (req, res) => {
-  const num1 = parseInt(req.params.number1, 10);
-  const num2 = parseInt(req.params.number2, 10);
-
-  if (Number.isNaN(num1) || Number.isNaN(num2)) {
-    res.status(400).json({ error: 'Parameters must be valid numbers.' });
-  } else {
-    res.status(200).json({ result: subtract(num1, num2) });
-  }
-});
+app.use('/numbers', numbersRoute);
 
 app.post('/numbers/multiply', (req, res) => {
   const num1 = req.body.a;
@@ -194,9 +146,9 @@ app.post('/arrays/starts-with-vowel', (req, res) => {
   res.status(200).json({ result: elementsStartingWithAVowel(req.body.array) });
 });
 
-// app.post('/arrays/remove-element', (req, res) => {
-//   res.status(200).json({ result: removeNthElement2(req.query.index, req.body.array) });
-// });
+app.post('/arrays/remove-element', (req, res) => {
+  res.status(200).json({ result: removeNthElement2(req.query.index, req.body.array) });
+});
 
 app.post('/booleans/negate', (req, res) => {
   res.status(200).json({ result: negate(req.body.value) });

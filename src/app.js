@@ -5,15 +5,6 @@ const app = express();
 app.use(express.json());
 
 const {
-  sayHello,
-  uppercase,
-  lowercase,
-  firstCharacter,
-  firstCharacters,
-  countCharacters,
-} = require('./lib/strings');
-
-const {
   add,
   subtract,
   multiply,
@@ -35,29 +26,9 @@ const {
 
 const { negate, truthiness, isOdd, startsWith } = require('./lib/booleans');
 
-app.get('/strings/hello/:string', (req, res) => {
-  res.status(200).json({ result: sayHello(req.params.string) });
-});
+const stringsRoute = require('./routes/strings');
 
-app.get('/strings/upper/:string', (req, res) => {
-  res.status(200).json({ result: uppercase(req.params.string) });
-});
-
-app.get('/strings/lower/:string', (req, res) => {
-  res.status(200).json({ result: lowercase(req.params.string) });
-});
-
-app.get('/strings/first-characters/:string', (req, res) => {
-  if (req.query.length) {
-    res.status(200).json({ result: firstCharacters(req.params.string, req.query.length) });
-  } else {
-    res.status(200).json({ result: firstCharacter(req.params.string) });
-  }
-});
-
-app.get('/strings/count/:string', (req, res) => {
-  res.status(200).json({ result: countCharacters(req.params.string) });
-});
+app.use('/strings', stringsRoute);
 
 app.get('/numbers/add/:number1/and/:number2', (req, res) => {
   const num1 = parseInt(req.params.number1, 10);

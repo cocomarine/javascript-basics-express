@@ -1,6 +1,6 @@
 # JavaScript Basics in Express
 
-Creating a Web API using Express that exposes the JavaScript functions that were previously solved, the JavaScript Basics (https://github.com/cocomarine/javascript-basics).
+Creating a Web API using Express that exposes the JavaScript functions previously solved, the JavaScript Basics (https://github.com/cocomarine/javascript-basics).
 
 ## Getting started
 
@@ -15,8 +15,6 @@ npm install
 ```
 
 ## Copy over JavaScript Basics code
-
-:rotating_light: **Important!**
 
 This exercise makes use of the previous `javascript-basics` code (https://github.com/cocomarine/javascript-basics). Copy the files from that project's `src/` folder into a new `lib/` directory in this repository's `src` directory. You should end up with the following file structure in this project:
 

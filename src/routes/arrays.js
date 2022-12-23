@@ -1,9 +1,7 @@
 const express = require('express');
-
 const arraysController = require('../controllers/arrays');
 
 const arraysRoute = express.Router();
-
 arraysRoute.post('/element-at-index/:number', arraysController.getElementNthIndex);
 arraysRoute.post('/to-string', arraysController.arrayToString);
 arraysRoute.post('/append', arraysController.appendToArray);

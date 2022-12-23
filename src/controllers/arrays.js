@@ -7,9 +7,7 @@ const {
 } = require('../lib/arrays');
 
 const getElementNthIndex = (req, res) => {
-  const num = parseInt(req.params.number, 10);
-
-  res.status(200).json({ result: getNthElement(num, req.body.array) });
+  res.status(200).json({ result: getNthElement(parseInt(req.params.number, 10), req.body.array) });
 };
 
 const arrayToString = (req, res) => {
